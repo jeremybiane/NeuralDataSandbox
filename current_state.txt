@@ -1,0 +1,123 @@
+# The `Pypeline` for #jbiane's associative learning experiment
+
+## Adding an animal
+
+Following the appended experiment structure (see below) the procedure to add an animal is as follows, eg., animal 55:
+ 
+ #. create the `results/55` folder
+ #. create the `data/`, `notebooks/` in `results/55`
+ #. for each session, e.g., `092617` and `092317`, create a folder in `results/55` (in the form of MMDDYYYY)
+ #. in each session folder, create `data/` and `notebooks/`
+ #. copy the files in the `data/` folder and in the `data/` folders in each session as described in the experiment section
+
+## Automatic execution of notebooks
+ #. open a terminal and navigate to the `code` folder
+    
+    ```
+    $ cd /media/data/DATA1/data/AssociativeLearning/code
+    ```
+ #. execute all the session notebooks for all the sessions of the new mouse (the will be automatically copied) in the right order as described in the next session:
+
+    ```
+    $ sh doit_allsessions.sh dhpc4 10062017 preprocessing 55
+    # and wait until it's done by monitoring the processing, for example using the `htop`
+
+    $ sh doit_allsessions.sh dhpc4 10062017 rates 55
+    # and so on...
+    ```
+ 
+ #. repeat the above for the cross-session notebooks in the right order
+
+    ```
+    $ sh doit.sh dhpc4 '' rates_early_vs_late 55 ''
+    # and so on...
+    ```
+ 
+ #. execute all the animal groups notebooks:
+
+    ```
+    $ sh exec_nb.sh ../results/notebooks/rates_dorsal_vs_ventral.ipynb
+    # and so on...
+    ```
+ 
+ #. to execute multiple mice at the same time, all sessions:
+
+    ``` 
+    $ for mouse in 52 54 dhpc4; do sh doit_allsessions.sh dhpc4 10062017 preprocessing $mouse; done
+    # and wait until it's done by monitoring the processing, for example using the `htop`
+    # or waiting for the "Writing..." output the will appear at the end.
+    ```
+
+
+### Run notebooks in the following order
+
+#### Session notebooks
+
+ #. results/\<mouse>/\<session>/notebooks/preprocessing
+ #. results/\<mouse>/\<session>/notebooks/rates
+
+#### Across-sessions notebooks
+
+ #. results/\<mouse>/notebooks/rates_early_vs_late
+
+#### Across-animals notebooks
+
+ #. results/notebooks/rates_dorsal_vs_ventral
+
+## Experiment structure
+
+```
+<experiment>
+|_ results/
+|   |_ <mouse>
+|   |   |_ <session>
+|   |   |   |_ notebooks/
+|   |   |   |  (notebooks for that session)
+|   |   |   |   |_ preprocessing.ipynb
+|   |   |   |   |  (basic preprocessing -- necessary)
+|   |   |   |   |_ rates.ipynb
+|   |   |   |   |  (delta rates CS- vs CS+ within session)
+|   |   |   |   |_ selectivity.ipynb
+|   |   |   |   |  (computes cell tuning to combinations of trial type and behavior)
+|   |   |   |   |_ psth.ipynb
+|   |   |   |      (displays average cell behavior around trial event, e.g., CS+ onset)
+|   |   |   |_ data/
+|   |   |   |   |_ behavior.txt
+|   |   |   |   |  (output of edit_arduino)
+|   |   |   |   |_ C_df.txt
+|   |   |   |   |  (dff)
+|   |   |   |   |_ Cnn.txt
+|   |   |   |   |  (for footprints)
+|   |   |   |   |_ Coor.mat
+|   |   |   |   |  (for footprints)
+|   |   |   |   |_ C_raw.txt
+|   |   |   |   |  (raw-signal - background)
+|   |   |   |   |_ C.txt
+|   |   |   |   |  (denoised)
+|   |   |   |   |_ S.txt
+|   |   |   |   |  (events)
+|   |   |   |   |_ tseries.xml
+|   |   |   |      (for time_ax)
+|   |   |   |_ notebooks/
+|   |   |      (notebooks comparing sessions)
+|   |   |       |_ rates_early_vs_late.ipynb
+|   |   |          (compare delta rates early vs late learning)
+|   |   |_ data/
+|   |      (e.g., cell registration)
+|   |       |_ sessions.txt
+|   |          (information about sessions, e.g., early and late)
+|   |_ notebooks/
+|      (notebooks comparing animals)
+|       |_ rates_dorsal_vs_ventral.ipynb
+|          (compare delta rates dHPC vs vHPC, early vs late)
+|_ code/
+    |_ utils.py
+    |  (the main code is here)
+    |_ plots.py
+    |  (generate nice plots)
+    |_ template.ipynb
+    |  (a notebook template for convenience)
+    |_ doit.sh
+       (automated notebooks execution -- BETA)
+```
+
