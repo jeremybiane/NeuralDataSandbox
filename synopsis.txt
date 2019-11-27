@@ -1,0 +1,54 @@
+# activity
+
+## fraction_active
+
+Fraction of active neurons combine across animals for each condition and each session.
+y-axis is number of trials.
+The trials are pseudo-simultaneous recordings across animals as we did in woods_etal18.
+The fraction of active neurons is computed by counting how many neurons in each pattern of calcium events have activity larger than 0.
+
+
+# decoding pre post ext2
+
+## decoding
+
+Decoding odors performance for each mouse in each session using CS period, or CS+Trace or Trace only period. Significance is t-test.
+
+## decoding_pre_post_ext2__same_session_allmice_combined
+
+Decoding performance per session, all animals combined. Mean/sem. T-test 1 sample.
+
+## decoding_pre_post_ext2__same_session_allmice_combined_(pre, post, ext2)
+
+Decoding performance in early (first 30), mid and late trials, all animals combined. Mean/sem. T-test 1 sample.
+
+## decoding_through_session_(pre, post, ext2)_allmice.pdf
+
+Blue: Decoding performance in groups of 14 consecutive trials in each time bin, i.e. time t corresponds to performance in trials between t-14 and t (mean/sem). Performance is computed on 5-fold cross-validation.
+Orange: Same as in blue but decoding lick rates in trial instead of odor.
+
+
+# Overlaps
+
+## overlaps__CSp_CSm_(pre, post, ext2)
+
+Overlap of tuning to CS+/-, within same session, computed with the activity during cs+trace. All animals combined. One-sided t-test.
+
+## overlaps__CSp-us_CSp_(pre, post)
+
+Overlap of tuning to reward during US and to CS+ during CS+trace, within same session, computed with the activity during CS+trace.
+
+
+# Similarity
+
+Pattern similarity between odor patterns of CS+/CS- in CS or US for each session.
+All cells used, no cellreg.
+All mice combined. For each mouse, the mean similarity is used for the corresponding pair of conditions.
+
+## similarity_CS(p, m)
+
+Similarity between CS+ (or CS-) patterns during CS or US in each session.
+
+## similarity
+
+Same as above but for all pairs.
